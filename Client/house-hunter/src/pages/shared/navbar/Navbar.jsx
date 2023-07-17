@@ -9,7 +9,7 @@ const Navbar = () => {
         {/* logo section  */}
         <Link to="/" className="">
           <span className="ml-2 text-2xl font-bold tracking-wide txt-color">
-            Job-Hunter
+            House-Hunter
           </span>
         </Link>
         {/* nav section  */}
@@ -24,32 +24,16 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink
-              to="statistic"
+              to="/dashboard"
               className={({ isActive }) => (isActive ? "active" : "default")}
             >
-              Statistic
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="appliedjobs"
-              className={({ isActive }) => (isActive ? "active" : "default")}
-            >
-              Applied Jobs
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="blog"
-              className={({ isActive }) => (isActive ? "active" : "default")}
-            >
-              Blog
+              Dashboard
             </NavLink>
           </li>
         </ul>
         {/* button section  */}
         <Link to="/statistic" className="hidden lg:flex">
-          <button className="btn">Start Applying</button>
+          <button className="btn">Login/Register</button>
         </Link>
         {/* mobile navbar section  */}
         <div className="lg:hidden">
@@ -69,7 +53,7 @@ const Navbar = () => {
                   <div>
                     <Link to="/" className="inline-flex items-center">
                       <span className="ml-2 text-xl font-bold tracking-wide txt-color">
-                        Job-Hunter
+                        House-Hunter
                       </span>
                     </Link>
                   </div>
@@ -97,36 +81,6 @@ const Navbar = () => {
                         }
                       >
                         Home
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink
-                        to="statistic"
-                        className={({ isActive }) =>
-                          isActive ? "active" : "default"
-                        }
-                      >
-                        Statistic
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink
-                        to="appliedjobs"
-                        className={({ isActive }) =>
-                          isActive ? "active" : "default"
-                        }
-                      >
-                        Applied Jobs
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink
-                        to="blog"
-                        className={({ isActive }) =>
-                          isActive ? "active" : "default"
-                        }
-                      >
-                        Blog
                       </NavLink>
                     </li>
                   </ul>
