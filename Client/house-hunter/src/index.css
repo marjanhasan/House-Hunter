@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+.my-container {
+  @apply px-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-20 lg:px-8;
+}
+.btn {
+  @apply inline-flex items-center h-12 px-6 mb-3 font-medium text-white bg-gradient-to-r from-pink-400 to-yellow-500 hover:from-pink-700 hover:to-yellow-800 transition duration-200 rounded shadow-md  md:mb-0 bg-blue-400 hover:bg-blue-700;
+}
+.btn-clicked {
+  @apply inline-flex items-center h-12 px-6 mb-3 font-medium text-white transition duration-200 rounded shadow-md  md:mb-0 bg-green-500 hover:bg-green-700;
+}
+.active {
+  @apply font-medium tracking-wide transition-colors duration-200 bg-gradient-to-r from-pink-400 to-yellow-500 inline-block text-transparent bg-clip-text;
+}
+.default {
+  @apply font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-pink-400;
+}
+.txt-color {
+  @apply bg-gradient-to-r from-pink-400 to-yellow-500 inline-block text-transparent bg-clip-text;
+}
