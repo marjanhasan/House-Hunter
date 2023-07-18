@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaWindowClose } from "react-icons/fa";
+import Cards from "../../components/cards/Cards";
 const houseData = [
   {
     id: 1,
@@ -21,6 +22,7 @@ const houseData = [
   },
   // Add more house data as needed
 ];
+const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const Home = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -64,7 +66,7 @@ const Home = () => {
   };
 
   return (
-    <div className="lg:flex">
+    <div className="lg:flex gap-4">
       {/* desktop sidebar */}
       <div className="basis-[30%] bg-gray-100 hidden lg:block ">
         <div className="flex ml-10 mb-4">
@@ -153,7 +155,8 @@ const Home = () => {
             <input
               type="range"
               min={0}
-              max={10000}
+              max={20000}
+              step={1000}
               value={filters.rentRange}
               onChange={(e) =>
                 handleFilterChange("rentRange", parseInt(e.target.value, 10))
@@ -277,7 +280,8 @@ const Home = () => {
               <input
                 type="range"
                 min={0}
-                max={10000}
+                max={20000}
+                step={1000}
                 value={filters.rentRange}
                 onChange={(e) =>
                   handleFilterChange("rentRange", parseInt(e.target.value, 10))
@@ -294,7 +298,22 @@ const Home = () => {
 
       {/* home page content  */}
       <div className="basis-[70%] bg-gray-50">
-        <h1>content</h1>
+        <h1 className="text-center font-semibold text-4xl my-12">
+          Welcome To House Hunting!
+        </h1>
+        <div className="grid grid-cols-3 gap-3">
+          {cards.map((s) => (
+            <Cards key={s} />
+          ))}
+        </div>
+        {/* pagination */}
+        <div className="flex justify-center my-6">
+          <div className="join mx-auto">
+            <button className="join-item btn">«</button>
+            <button className="join-item btn">Page 22</button>
+            <button className="join-item btn">»</button>
+          </div>
+        </div>
       </div>
     </div>
   );

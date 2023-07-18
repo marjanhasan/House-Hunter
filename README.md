@@ -4,7 +4,7 @@ Welcome to "House Hunter", your ultimate destination for exploring the world's b
 
 ## Live Link
 
-https://onlychefs-fae56.web.app/
+https://house-hunter-marjan.netlify.app/
 
 ## Features
 
