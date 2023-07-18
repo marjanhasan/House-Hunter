@@ -60,7 +60,9 @@ app.post("/addhouse", async (req, res) => {
 
 app.get("/houses", async (req, res) => {
   try {
-    const houses = await House.find();
+    const page = parseInt(req.query.page) || 1;
+    const skip = (page - 1) * 10;
+    const houses = await House.find().limit(10).skip(skip);
     if (houses) {
       res.status(200).send({
         success: true,
@@ -80,14 +82,47 @@ app.get("/houses", async (req, res) => {
 
 app.delete("/houses/:id", async (req, res) => {
   try {
-    const house = await House.findOne({ _id: req.params.id });
+    const house = await House.findByIdAndDelete({ _id: req.params.id });
     if (house) {
-      await House.deleteOne({ _id: req.params.id });
       res.status(200).send({
-        message: "House data is deleted",
+        success: true,
+        message: "House deleted",
+        data: house,
       });
     } else {
-      res.status(404).send({ message: "House is not found with this id" });
+      res.status(404).send({
+        success: false,
+        message: "House is not found with this id",
+      });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+    });
+  }
+});
+
+app.put("/houses/:id", async (req, res) => {
+  try {
+    const house = req.body;
+    const updatedHouse = await House.findByIdAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: house,
+      },
+      { new: true }
+    );
+    if (updatedHouse) {
+      res.status(200).send({
+        success: true,
+        message: "House updated",
+        data: updatedHouse,
+      });
+    } else {
+      res.status(404).send({
+        success: false,
+        message: "House is not found with this id",
+      });
     }
   } catch (error) {
     res.status(500).send({
