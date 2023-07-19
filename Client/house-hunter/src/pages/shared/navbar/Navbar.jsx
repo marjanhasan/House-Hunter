@@ -32,7 +32,7 @@ const Navbar = () => {
           </li>
         </ul>
         {/* button section  */}
-        <Link to="/statistic" className="hidden lg:flex">
+        <Link to="/login" className="hidden lg:flex">
           <button className="btn">Login/Register</button>
         </Link>
         {/* mobile navbar section  */}

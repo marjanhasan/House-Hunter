@@ -113,6 +113,16 @@ app.post("/addhouse", async (req, res) => {
 
 app.get("/houses", async (req, res) => {
   try {
+    const filter = {
+      page: req.query.page,
+      search: req.query.search,
+      available: req.query.available,
+      rent: req.query.rent,
+      bedrooms: req.query.bedrooms,
+      bathrooms: req.query.bathrooms,
+      room: req.query.room,
+    };
+    console.log(filter);
     const page = parseInt(req.query.page) || 1;
     const skip = (page - 1) * 10;
     const houses = await House.find().limit(10).skip(skip);

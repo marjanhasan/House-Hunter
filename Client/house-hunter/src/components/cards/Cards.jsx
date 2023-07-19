@@ -1,17 +1,39 @@
-const Cards = () => {
+import Swal from "sweetalert2";
+
+const Cards = ({ data }) => {
+  const { address, available, bathrooms, bedrooms, city, size, picture, rent } =
+    data;
+  const handleBookings = () => {
+    Swal.fire({
+      title: "Sorry!",
+      text: "This feature is not available due to unavoidable reasons",
+      imageUrl:
+        "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji.png",
+      imageWidth: 200,
+      imageHeight: 200,
+      imageAlt: "Custom image",
+    });
+  };
   return (
     <div className="card w-full bg-base-100 shadow-xl">
       <figure>
-        <img
-          src="https://media.istockphoto.com/id/155700839/photo/a-beautiful-home-available-for-rent.jpg?s=612x612&w=0&k=20&c=aPwqJ67O3CGGItsDoI8fuGwAuTR3L3B80tImG2mlQQ8="
-          alt="Shoes"
-        />
+        <img src={picture} />
       </figure>
-      <div className="card-body">
-        <h2 className="card-title">Shoes!</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div className="card-actions justify-end">
-          <button className="btn btn-primary">Buy Now</button>
+      <div className="mx-3 my-3">
+        <h2 className="text-xl font-medium my-2">
+          Room size: {size} is {available} at {rent} BDT
+        </h2>
+        <h2 className="text-lg font-medium my-2">
+          Location: {address} in {city} city
+        </h2>
+        <div className="text-sm font-medium my-2 flex justify-between">
+          <span>Bathrooms: {bathrooms}</span>
+          <span>Bedrooms: {bedrooms}</span>
+        </div>
+        <div className="flex justify-center mt-3">
+          <button className="btn" onClick={handleBookings}>
+            Book Now
+          </button>
         </div>
       </div>
     </div>

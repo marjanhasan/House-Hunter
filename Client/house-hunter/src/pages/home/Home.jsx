@@ -1,70 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaWindowClose } from "react-icons/fa";
 import Cards from "../../components/cards/Cards";
-const houseData = [
-  {
-    id: 1,
-    city: "New York",
-    bedrooms: 3,
-    bathrooms: 2,
-    roomSize: "Medium",
-    availability: "Available",
-    rent: 2000,
-  },
-  {
-    id: 2,
-    city: "Los Angeles",
-    bedrooms: 2,
-    bathrooms: 1,
-    roomSize: "Small",
-    availability: "Available",
-    rent: 1500,
-  },
-  // Add more house data as needed
-];
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+import axios from "axios";
 
 const Home = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filters, setFilters] = useState({
-    city: "",
-    bedrooms: "",
-    bathrooms: "",
-    roomSize: "",
-    availability: "",
-    rentRange: 5000, // Default rent range
-  });
-
-  const handleSearch = () => {
-    // Perform search logic with the searchQuery and filters
-    const filteredHouses = houseData.filter((house) => {
-      // Apply filters
-      const { city, bedrooms, bathrooms, roomSize, availability, rentRange } =
-        filters;
-
-      return (
-        (city === "" || house.city === city) &&
-        (bedrooms === "" || house.bedrooms === parseInt(bedrooms, 10)) &&
-        (bathrooms === "" || house.bathrooms === parseInt(bathrooms, 10)) &&
-        (roomSize === "" || house.roomSize === roomSize) &&
-        (availability === "" || house.availability === availability) &&
-        house.rent <= rentRange
-      );
-    });
-
-    console.log("Search query:", searchQuery);
-    console.log("Filters:", filters);
-    console.log("Filtered houses:", filteredHouses);
-  };
-
-  const handleFilterChange = (filterName, value) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [filterName]: value,
-    }));
-  };
-
+  const [city, setCity] = useState("");
+  const [available, setAvailable] = useState("");
+  const [rent, setRent] = useState("");
+  const [bedrooms, setBedrooms] = useState("");
+  const [bathrooms, setbathrooms] = useState("");
+  const [room, setRoom] = useState("");
+  const [houseData, setHouseData] = useState([]);
+  const [query, setQuery] = useState({});
+  const [page, setPage] = useState(1);
+  useEffect(() => {
+    const { searchQ, cityQ, availableQ, rentQ, bedroomsQ, bathroomsQ, roomQ } =
+      query;
+    axios
+      .get(
+        `http://localhost:5000/houses?page=${page}&search=${searchQ}&city=${cityQ}&available=${availableQ}&rent=${rentQ}&bedrooms=${bedroomsQ}&bathrooms=${bathroomsQ}&room=${roomQ}`
+      )
+      .then((data) => setHouseData(data.data.data))
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [query]);
   return (
     <div className="lg:flex gap-4">
       {/* desktop sidebar */}
@@ -78,7 +40,17 @@ const Home = () => {
             placeholder="Search..."
           />
           <button
-            onClick={handleSearch}
+            onClick={() =>
+              setQuery({
+                searchQ: searchQuery,
+                cityQ: city,
+                availableQ: available,
+                rentQ: rent,
+                bedroomsQ: bedrooms,
+                bathroomsQ: bathrooms,
+                roomQ: room,
+              })
+            }
             className="px-4 py-2 bg-blue-500 text-white rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Search
@@ -88,20 +60,19 @@ const Home = () => {
           <div className="my-4">
             <label className="block mb-1 font-bold">City:</label>
             <select
-              value={filters.city}
-              onChange={(e) => handleFilterChange("city", e.target.value)}
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select city...</option>
-              <option value="New York">New York</option>
-              <option value="Los Angeles">Los Angeles</option>
+              <option value="New York">Dhaka</option>
             </select>
           </div>
           <div className="my-4">
             <label className="block mb-1 font-bold">Bedrooms:</label>
             <select
-              value={filters.bedrooms}
-              onChange={(e) => handleFilterChange("bedrooms", e.target.value)}
+              value={bedrooms}
+              onChange={(e) => setBedrooms(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select bedrooms...</option>
@@ -113,8 +84,8 @@ const Home = () => {
           <div className="my-4">
             <label className="block mb-1 font-bold">Bathrooms:</label>
             <select
-              value={filters.bathrooms}
-              onChange={(e) => handleFilterChange("bathrooms", e.target.value)}
+              value={bathrooms}
+              onChange={(e) => setbathrooms(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select bathrooms...</option>
@@ -126,8 +97,8 @@ const Home = () => {
           <div className="my-4">
             <label className="block mb-1 font-bold">Room Size:</label>
             <select
-              value={filters.roomSize}
-              onChange={(e) => handleFilterChange("roomSize", e.target.value)}
+              value={room}
+              onChange={(e) => setRoom(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select room size...</option>
@@ -139,10 +110,8 @@ const Home = () => {
           <div className="my-4">
             <label className="block mb-1 font-bold">Availability:</label>
             <select
-              value={filters.availability}
-              onChange={(e) =>
-                handleFilterChange("availability", e.target.value)
-              }
+              value={available}
+              onChange={(e) => setAvailable(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select availability...</option>
@@ -157,14 +126,12 @@ const Home = () => {
               min={0}
               max={20000}
               step={1000}
-              value={filters.rentRange}
-              onChange={(e) =>
-                handleFilterChange("rentRange", parseInt(e.target.value, 10))
-              }
+              value={rent}
+              onChange={(e) => setRent(parseInt(e.target.value))}
               className="w-40"
             />
             <div className="flex justify-between">
-              <span>From 0 To {filters.rentRange}</span>
+              <span>From 0 To {rent}</span>
             </div>
           </div>
         </div>
@@ -193,7 +160,17 @@ const Home = () => {
                   placeholder="Search..."
                 />
                 <button
-                  onClick={handleSearch}
+                  onClick={() =>
+                    setQuery({
+                      searchQ: searchQuery,
+                      cityQ: city,
+                      availableQ: available,
+                      rentQ: rent,
+                      bedroomsQ: bedrooms,
+                      bathroomsQ: bathrooms,
+                      roomQ: room,
+                    })
+                  }
                   className="px-2 py-1 lg:px-4 lg:py-2 bg-blue-500 text-white rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   Search
@@ -211,20 +188,19 @@ const Home = () => {
             <div className="my-4">
               <label className="block mb-1 font-bold">City:</label>
               <select
-                value={filters.city}
-                onChange={(e) => handleFilterChange("city", e.target.value)}
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 "
               >
                 <option value="">Select city...</option>
-                <option value="New York">New York</option>
-                <option value="Los Angeles">Los Angeles</option>
+                <option value="New York">Dhaka</option>
               </select>
             </div>
             <div className="my-4">
               <label className="block mb-1 font-bold">Bedrooms:</label>
               <select
-                value={filters.bedrooms}
-                onChange={(e) => handleFilterChange("bedrooms", e.target.value)}
+                value={bedrooms}
+                onChange={(e) => setBedrooms("bedrooms", e.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">Select bedrooms...</option>
@@ -236,10 +212,8 @@ const Home = () => {
             <div className="my-4">
               <label className="block mb-1 font-bold">Bathrooms:</label>
               <select
-                value={filters.bathrooms}
-                onChange={(e) =>
-                  handleFilterChange("bathrooms", e.target.value)
-                }
+                value={bathrooms}
+                onChange={(e) => setbathrooms(e.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">Select bathrooms...</option>
@@ -251,8 +225,8 @@ const Home = () => {
             <div className="my-4">
               <label className="block mb-1 font-bold">Room Size:</label>
               <select
-                value={filters.roomSize}
-                onChange={(e) => handleFilterChange("roomSize", e.target.value)}
+                value={room}
+                onChange={(e) => setRoom(e.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">Select room size...</option>
@@ -264,10 +238,8 @@ const Home = () => {
             <div className="my-4">
               <label className="block mb-1 font-bold">Availability:</label>
               <select
-                value={filters.availability}
-                onChange={(e) =>
-                  handleFilterChange("availability", e.target.value)
-                }
+                value={available}
+                onChange={(e) => setAvailable(e.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">Select availability...</option>
@@ -282,14 +254,12 @@ const Home = () => {
                 min={0}
                 max={20000}
                 step={1000}
-                value={filters.rentRange}
-                onChange={(e) =>
-                  handleFilterChange("rentRange", parseInt(e.target.value, 10))
-                }
+                value={rent}
+                onChange={(e) => setRent(parseInt(e.target.value))}
                 className="w-40"
               />
               <div className="flex justify-between">
-                <span>From 0 To {filters.rentRange}</span>
+                <span>From 0 To {rent}</span>
               </div>
             </div>
           </div>
@@ -301,17 +271,33 @@ const Home = () => {
         <h1 className="text-center font-semibold text-4xl my-12">
           Welcome To House Hunting!
         </h1>
-        <div className="grid grid-cols-3 gap-3">
-          {cards.map((s) => (
-            <Cards key={s} />
+        <div className="grid lg:grid-cols-3 gap-3 mx-5">
+          {houseData.map((data) => (
+            <Cards key={data._id} data={data} />
           ))}
         </div>
         {/* pagination */}
         <div className="flex justify-center my-6">
           <div className="join mx-auto">
-            <button className="join-item btn">«</button>
-            <button className="join-item btn">Page 22</button>
-            <button className="join-item btn">»</button>
+            <button
+              className="join-item btn"
+              onClick={() => {
+                page === 1 ? setPage(1) : setPage(page - 1);
+              }}
+              disabled={page === 1}
+            >
+              «
+            </button>
+            <button className="join-item btn">{page}</button>
+            <button
+              className="join-item btn"
+              onClick={() => {
+                page === 10 ? setPage(10) : setPage(page + 1);
+              }}
+              disabled={page === 10}
+            >
+              »
+            </button>
           </div>
         </div>
       </div>
