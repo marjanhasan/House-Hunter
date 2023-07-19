@@ -6,11 +6,37 @@ Welcome to "House Hunter", your ultimate destination for exploring the world's b
 
 https://house-hunter-marjan.netlify.app/
 
+## Github Link
+
+Client-Side: https://github.com/marjanhasan/House-Hunter/tree/main/Client/house-hunter
+Server-Side: https://github.com/marjanhasan/House-Hunter/tree/main/Server
+
+## Palindrome using JS
+
+Code-Link: https://github.com/marjanhasan/House-Hunter/blob/main/palindrome.js
+
+## Client-Side
+
+### Technology used
+
+ReactJs, Vite TailwindCSS, Axios, SweetAlert, React-Router-Dom, Lottie-Animation, DaisyUI
+
 ## Features
 
-- Light/dark mode toggle
-- Firebase Authentication(Google,Github,Email)
 - Private Routes
-- Lottie Animation
-- Lazy Loading
 - Mobile, Tablet & DeskTop Responsive
+- Search and Filters options for dynamic searching
+- Different dashboard for different role
+
+## Server-Side
+
+### Technology used
+
+NodeJS, ExpressJS, MongoDB, Mongoose, Passport,Passport-JWT, jsonwebtoken, bcrypt, dotenv, CORS
+
+## Features
+
+- Search Query
+- Pagination
+- Simple CRUD operations
+- Custom User Authentication
